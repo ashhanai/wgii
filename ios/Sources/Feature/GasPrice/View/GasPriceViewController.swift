@@ -42,11 +42,17 @@ final class GasPriceViewController: ViewController<GasPriceLayout, GasPriceViewM
                 .disposed(by: self.disposeBag)
         }
 
+        layout.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapBackground)))
+
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [weak self] height in
                 self?.setBottomInset(height)
             })
             .disposed(by: disposeBag)
+    }
+
+    @objc func tapBackground() {
+        layout.endEditing(false)
     }
 
     private func updateGasPrice(with state: State.GasPrice) {
