@@ -1,0 +1,17 @@
+strings:
+  options:
+    separator: "_"
+  inputs:
+    - Sources/Resources/cs.lproj/Localizable.strings
+  outputs:
+    - templateName: structured-swift5
+      output: Generated/Strings+Generated.swift
+      params:
+        enumName: Localization
+xcassets:
+  inputs:
+    - Sources/App/Images.xcassets
+    - Sources/App/Colors.xcassets
+  outputs:
+    - templateName: swift5
+      output: Generated/Assets+Generated.swift

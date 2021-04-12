@@ -1,0 +1,21 @@
+included:
+  - Sources
+
+disabled_rules:
+  - todo
+  - nesting
+
+identifier_name:
+  excluded:
+    - id
+    - to
+
+type_name:
+  max_length: 80
+  excluded:
+    - Id
+
+cyclomatic_complexity:
+  ignores_case_statements: true
+
+reporter: emoji

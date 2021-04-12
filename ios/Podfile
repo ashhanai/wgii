@@ -1,0 +1,40 @@
+platform :ios, '13.0'
+inhibit_all_warnings!
+
+abstract_target 'Wgii-Pods' do
+	use_frameworks!
+
+	pod 'MaterialComponents/TextFields'
+	pod 'SnapKit'
+	pod 'RxSwift'
+    pod 'RxCocoa'
+    pod 'RxKeyboard'
+	pod 'Firebase/Analytics'
+	pod 'Firebase/Crashlytics'
+    pod 'Firebase/Messaging'
+    pod 'Firebase/Database'
+    pod 'Firebase/Auth'
+    pod 'Swinject'
+    pod 'SwinjectAutoregistration'
+
+	target 'Wgii' do 
+
+    target 'UnitTests' do
+		inherit! :search_paths
+
+		pod 'Quick'
+		pod 'Nimble'
+		pod 'RxBlocking'
+		pod 'RxTest'
+    end
+    
+	end
+end
+
+post_install do |pi|
+	pi.pods_project.targets.each do |t|
+		t.build_configurations.each do |config|
+			config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
+		end
+	end
+end

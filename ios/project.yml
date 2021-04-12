@@ -1,0 +1,47 @@
+name: Wgii
+settings:
+  IPHONEOS_DEPLOYMENT_TARGET: "13.0"
+targets:
+  Wgii:
+    scheme:
+      configVariants:
+        # could stay empty to properly generate target scheme
+      testTargets:
+        - UnitTests
+      gatherCoverageData: true
+    type: application
+    platform: iOS
+    sources: [Generated, Sources, Config]
+    entitlements:
+      path: Config/Wgii.entitlements
+      properties:
+        aps-environment: development
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: "1"
+        DEBUG_INFORMATION_FORMAT: "dwarf-with-dsym"
+        PRODUCT_BUNDLE_IDENTIFIER: "cz.naimashhab.wgii"
+        INFOPLIST_FILE: Info.plist
+        DEVELOPMENT_TEAM: GZCAE59ZM7
+      configs:
+        Debug:
+          CODE_SIGN_IDENTITY[sdk=iphoneos*]: "Apple Development: Naim Ashhab (T4T7BYM3S6)"
+          PROVISIONING_PROFILE_SPECIFIER: Wgii development
+        Release:
+          CODE_SIGN_IDENTITY[sdk=iphoneos*]: "Apple Distribution: Naim Ashhab (GZCAE59ZM7)"
+          PROVISIONING_PROFILE_SPECIFIER: Wgii app store
+    postBuildScripts:
+      - script: "/usr/bin/xcrun --sdk macosx mint run swiftlint"
+        name: Run Swiftlint
+      - script: "" # Workaround to force [CP] Embed Pods Frameworks position
+        name: "[CP] Embed Pods Frameworks"
+
+  UnitTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [Tests]
+    dependencies:
+      - target: Wgii
+    preBuildScripts:
+      - script: "" # Workaround to position [CP] Embed Pods Frameworks run script phase before build phase
+        name: "[CP] Embed Pods Frameworks"
